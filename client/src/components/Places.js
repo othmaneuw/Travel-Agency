@@ -1,10 +1,25 @@
 import { Link, useParams } from "react-router-dom";
+import { useState } from "react";
+import Perks from "./Perks";
 
 const Places = () => {
   const headingStyle = "text-left text-2xl text-gray-500 mb-3 ml-4";
 
   const { action } = useParams();
-  console.log(action);
+  //console.log(action);
+  const [title, setTitle] = useState("");
+  const [address, setAddress] = useState("");
+  const [addedPhotos, setAddedPhotos] = useState([]);
+  const [photoLinks, setPhotoLinks] = useState([]);
+  const [description, setDescription] = useState("");
+  const [perks, setPerks] = useState([]);
+  const [extraInfo, setExtraInfo] = useState("");
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [maxGuests, setMaxGuests] = useState(1);
+  const inputTitle = (title) => {
+    return <h2 className={headingStyle}>{title}</h2>;
+  };
   return (
     <div>
       {action !== "new" && (
@@ -32,19 +47,31 @@ const Places = () => {
       {action === "new" && (
         <div>
           <form>
-            <h2 className={headingStyle}>Title</h2>
+            {inputTitle("Title")}
             <input
               type="text"
               placeholder="Title , for exp 7 days of paradise in Bahamas !"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
-            <h2 className={headingStyle}>Address</h2>
-            <input type="text" placeholder="Adress" />
-            <h2 className={headingStyle}>Photos</h2>
+            {inputTitle("Address")}
+            <input
+              type="text"
+              placeholder="Adress"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+            {inputTitle("Photos")}
             <p className={`text-left text-gray-600 mb-3 ml-4 text-md`}>
               More = Better
             </p>
             <div className="flex gap-2 align-center">
-              <input type="text" placeholder="Upload images by link ...jpg" />
+              <input
+                type="text"
+                placeholder="Upload images by link ...jpg"
+                value={photoLinks}
+                onChange={(e) => setPhotoLinks(e.target.value)}
+              />
               <button className="bg-gray-200 px-4 rounded-2xl">
                 Add photo
               </button>
@@ -68,74 +95,44 @@ const Places = () => {
                 Upload
               </button>
             </div>
-            <h2 className={headingStyle}>Description</h2>
-            <textarea />
-            <h2 className={headingStyle}>Perks</h2>
-            <p className="text-gray-800 text-left text-sm ml-2">
-              Select All the perks of the place
-            </p>
-            <div className="text-left flex gap-20">
-              <div className="w-md" style={{display : 'inline-block',marginLeft : '2px'}}>
-                <label className="flex border border-gray-500 p-2 gap-3 cursor-pointer">
-                  <input type="checkbox" />
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M1.371 8.143c5.858-5.857 15.356-5.857 21.213 0a.75.75 0 010 1.061l-.53.53a.75.75 0 01-1.06 0c-4.98-4.979-13.053-4.979-18.032 0a.75.75 0 01-1.06 0l-.53-.53a.75.75 0 010-1.06zm3.182 3.182c4.1-4.1 10.749-4.1 14.85 0a.75.75 0 010 1.061l-.53.53a.75.75 0 01-1.062 0 8.25 8.25 0 00-11.667 0 .75.75 0 01-1.06 0l-.53-.53a.75.75 0 010-1.06zm3.204 3.182a6 6 0 018.486 0 .75.75 0 010 1.061l-.53.53a.75.75 0 01-1.061 0 3.75 3.75 0 00-5.304 0 .75.75 0 01-1.06 0l-.53-.53a.75.75 0 010-1.06zm3.182 3.182a1.5 1.5 0 012.122 0 .75.75 0 010 1.061l-.53.53a.75.75 0 01-1.061 0l-.53-.53a.75.75 0 010-1.06z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <span>Wifi</span>
-                </label>
+            {inputTitle("Description")}
+            <textarea value={description} onChange={(e)=>setDescription(e.target.value)} />
+            {inputTitle("Perks")}
+            <Perks selected={perks} onChange={setPerks} />
+            {inputTitle("Extra Info")}
+            <textarea value={extraInfo} onChange={(e)=>setExtraInfo(e.target.value)} />
+            {inputTitle("Check In & Out times")}
+            <div className="flex gap-3">
+              <div className="flex gap-2">
+                <h3 className="text-red-600">Check in time</h3>
+                <input type="text" placeholder="14:00" value={checkIn} onChange={(e)=>setCheckIn(e.target.value)} />
               </div>
-              <div style={{display : 'inline-block',marginLeft : '2px'}}>
-                <label className="flex border border-gray-500 p-2 gap-3 cursor-pointer">
-                  <input type="checkbox" />
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125z"
-                    />
-                  </svg>
-                  <span>TV</span>
-                </label>
+              <div className="flex gap-2">
+                <h3 className="text-red-600">Check out time</h3>
+                <input type="text" placeholder="18:00" value={checkOut} onChange={(e)=>setCheckOut(e.target.value)} />
               </div>
-              <div style={{display : 'inline-block',marginLeft : '2px'}}>
-                <label className="flex border border-gray-500 p-2 gap-3 cursor-pointer">
-                  <input type="checkbox" />
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"
-                    />
-                  </svg>
-                  <span>Free parking spot</span>
-                </label>
+              <div className="flex gap-2">
+                <h3 className="text-red-600">Max number of guests</h3>
+                <input type="number" value={maxGuests} onChange={(e)=>setMaxGuests(e.target.value)} />
               </div>
             </div>
-            <h2 className={headingStyle}>Extra Info</h2>
-            <textarea />
+            <button className="primary my-4 p-4 flex justify-center gap-5">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
+                />
+              </svg>
+              <span>Save the tour</span>
+            </button>
           </form>
         </div>
       )}
