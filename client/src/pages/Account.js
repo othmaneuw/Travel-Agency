@@ -6,6 +6,7 @@ import Places from "../components/Places";
 
 const Account = () => {
   const { user, ready, setUser } = useContext(UserContext);
+  console.log(user);
   const [redirect, setRedirect] = useState(false);
   let { subpage } = useParams();
   if (subpage === undefined) {
@@ -21,9 +22,10 @@ const Account = () => {
   };
 
   const logout = async () => {
-    await axios.post("/logout");
-    setRedirect(true);
+    const response = await axios.post("/logout",{},{withCredentials:true});
     setUser(null);
+    setRedirect(true);
+    console.log(response.data);
   };
 
   if (redirect) {

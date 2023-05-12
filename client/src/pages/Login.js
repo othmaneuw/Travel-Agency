@@ -4,7 +4,8 @@ import { Link, Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 const Login = () => {
-  const {setUser} = useContext(UserContext);
+  const {setUser,user} = useContext(UserContext);
+  console.log("hello",user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);

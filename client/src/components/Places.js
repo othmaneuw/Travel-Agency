@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import Perks from "./Perks";
+import axios from "axios";
 
 const Places = () => {
   const headingStyle = "text-left text-2xl text-gray-500 mb-3 ml-4";
@@ -10,16 +11,26 @@ const Places = () => {
   const [title, setTitle] = useState("");
   const [address, setAddress] = useState("");
   const [addedPhotos, setAddedPhotos] = useState([]);
-  const [photoLinks, setPhotoLinks] = useState([]);
+  const [photoLink, setPhotoLink] = useState("");
   const [description, setDescription] = useState("");
   const [perks, setPerks] = useState([]);
   const [extraInfo, setExtraInfo] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
-  const [maxGuests, setMaxGuests] = useState(1);
+  const [maxGuests, setMaxGuests] = useState();
   const inputTitle = (title) => {
     return <h2 className={headingStyle}>{title}</h2>;
   };
+
+  const addPhotoLink = async () =>{
+    const {data} =  await axios.post('/upload-by-link',{link : photoLink});
+    console.log(data);
+    setAddedPhotos(prev => {
+      return [...prev,data];
+    });
+    //console.log(addedPhotos);
+  }
+
   return (
     <div>
       {action !== "new" && (
@@ -69,14 +80,19 @@ const Places = () => {
               <input
                 type="text"
                 placeholder="Upload images by link ...jpg"
-                value={photoLinks}
-                onChange={(e) => setPhotoLinks(e.target.value)}
+                value={photoLink}
+                onChange={(e) => setPhotoLink(e.target.value)}
               />
-              <button className="bg-gray-200 px-4 rounded-2xl">
+              <button type="button" onClick={addPhotoLink} className="bg-gray-200 px-4 rounded-2xl">
                 Add photo
               </button>
             </div>
-            <div className="text-left mt-2">
+            <div className="text-left mt-2 flex items-center">
+              {addedPhotos.length > 0 && addedPhotos.map(link => (
+                <div className="flex ">
+                  <img width="100px" className="" src={`http://localhost:4000/uploads/${link}`} alt="xx" />
+                </div>
+              ))}
               <button
                 className={`border border-gray-300 rounded-2xl px-10 py-4 text-gray-500 flex gap-2`}
               >
