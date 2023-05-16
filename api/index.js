@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/user');
 const imageDownloader = require('image-downloader');
 const mongoose = require('mongoose');
+const multer = require('multer');
+const fs = require('fs');
 
 const app = express();
 
@@ -23,6 +25,7 @@ app.use(cors({
 }))
 
 app.use(userRoutes);
+//Uploading photos by link
 app.post('/upload-by-link',async (req,res)=>{
     const {link} = req.body;
     console.log(link)
@@ -33,5 +36,22 @@ app.post('/upload-by-link',async (req,res)=>{
       };
       await imageDownloader.image(options);
       res.json(filename);
+})
+
+//Uploading photos
+const uploadMiddleware = multer({ dest: 'uploads/' })
+app.post('/upload',uploadMiddleware.array('photos',100),(req,res)=>{
+   console.log(req.files);
+   const uploadedPhoto = [];
+   for(let i=0;i< req.files.length;i++){
+    const {path,originalname} = req.files[i];
+    const extension = originalname.split('.')[1];
+    const newPath = path+'.'+extension;
+    fs.renameSync(path,newPath);
+    const filename = newPath.split('\\')[1];
+    console.log(filename);
+    uploadedPhoto.push(filename);
+   }
+   res.json(uploadedPhoto);
 })
 

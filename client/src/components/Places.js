@@ -22,13 +22,29 @@ const Places = () => {
     return <h2 className={headingStyle}>{title}</h2>;
   };
 
-  const addPhotoLink = async () =>{
-    const {data} =  await axios.post('/upload-by-link',{link : photoLink});
+  const addPhotoLink = async () => {
+    const { data } = await axios.post("/upload-by-link", { link: photoLink });
     console.log(data);
-    setAddedPhotos(prev => {
-      return [...prev,data];
+    setAddedPhotos((prev) => {
+      return [...prev, data];
     });
     //console.log(addedPhotos);
+  };
+
+  const uploadPhoto = (e) =>{
+       const files = e.target.files;
+       console.log(files);
+       const data = new FormData();
+       for(let i=0;i<files.length;i++){
+        data.append('photos',files[i]);
+       }
+       axios.post('/upload',data,{headers:'Content-type:multipart/form-data'})
+            .then(response =>{
+              const {data} = response;
+              setAddedPhotos(prev =>{
+                return [...prev,...data];
+              })
+            })
   }
 
   return (
@@ -83,19 +99,32 @@ const Places = () => {
                 value={photoLink}
                 onChange={(e) => setPhotoLink(e.target.value)}
               />
-              <button type="button" onClick={addPhotoLink} className="bg-gray-200 px-4 rounded-2xl">
+              <button
+                type="button"
+                onClick={addPhotoLink}
+                className="bg-gray-200 px-4 rounded-2xl"
+              >
                 Add photo
               </button>
             </div>
             <div className="text-left mt-2 flex items-center">
-              {addedPhotos.length > 0 && addedPhotos.map(link => (
-                <div className="flex ">
-                  <img width="100px" className="" src={`http://localhost:4000/uploads/${link}`} alt="xx" />
-                </div>
-              ))}
-              <button
-                className={`border border-gray-300 rounded-2xl px-10 py-4 text-gray-500 flex gap-2`}
+              {addedPhotos.length > 0 &&
+                addedPhotos.map((link) => (
+                  <div className="flex ">
+                    <img
+                      width="100px"
+                      height="100px"
+                      className=""
+                      src={`http://localhost:4000/uploads/${link}`}
+                      alt="xx"
+                    />
+                  </div>
+                ))}
+              <label
+                type="button"
+                className={`cursor-pointer border border-gray-300 rounded-2xl px-10 py-4 text-gray-500 flex gap-2`}
               >
+                <input type="file" multiple className="hidden" onChange={uploadPhoto} />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -109,27 +138,47 @@ const Places = () => {
                   />
                 </svg>
                 Upload
-              </button>
+              </label>
             </div>
             {inputTitle("Description")}
-            <textarea value={description} onChange={(e)=>setDescription(e.target.value)} />
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
             {inputTitle("Perks")}
             <Perks selected={perks} onChange={setPerks} />
             {inputTitle("Extra Info")}
-            <textarea value={extraInfo} onChange={(e)=>setExtraInfo(e.target.value)} />
+            <textarea
+              value={extraInfo}
+              onChange={(e) => setExtraInfo(e.target.value)}
+            />
             {inputTitle("Check In & Out times")}
             <div className="flex gap-3">
               <div className="flex gap-2">
                 <h3 className="text-red-600">Check in time</h3>
-                <input type="text" placeholder="14:00" value={checkIn} onChange={(e)=>setCheckIn(e.target.value)} />
+                <input
+                  type="text"
+                  placeholder="14:00"
+                  value={checkIn}
+                  onChange={(e) => setCheckIn(e.target.value)}
+                />
               </div>
               <div className="flex gap-2">
                 <h3 className="text-red-600">Check out time</h3>
-                <input type="text" placeholder="18:00" value={checkOut} onChange={(e)=>setCheckOut(e.target.value)} />
+                <input
+                  type="text"
+                  placeholder="18:00"
+                  value={checkOut}
+                  onChange={(e) => setCheckOut(e.target.value)}
+                />
               </div>
               <div className="flex gap-2">
                 <h3 className="text-red-600">Max number of guests</h3>
-                <input type="number" value={maxGuests} onChange={(e)=>setMaxGuests(e.target.value)} />
+                <input
+                  type="number"
+                  value={maxGuests}
+                  onChange={(e) => setMaxGuests(e.target.value)}
+                />
               </div>
             </div>
             <button className="primary my-4 p-4 flex justify-center gap-5">
