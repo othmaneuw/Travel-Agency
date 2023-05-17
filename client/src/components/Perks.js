@@ -1,4 +1,13 @@
 const Perks = ({selected,onChange}) => {
+  const handleCheckBox = (e) =>{
+    const {checked,name} = e.target;
+    console.log(checked,name);
+    if(checked){
+      onChange([...selected,name])
+    }else{
+      onChange([...selected.filter(item => item !== name)])
+    }
+  }
   return (
     <>
       <p className="text-gray-800 text-left text-sm ml-2">
@@ -10,7 +19,7 @@ const Perks = ({selected,onChange}) => {
           style={{ display: "inline-block", marginLeft: "2px" }}
         >
           <label className="flex border border-gray-500 p-2 gap-3 cursor-pointer">
-            <input type="checkbox" />
+            <input type="checkbox" onChange={handleCheckBox} name='Wifi' />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -28,7 +37,7 @@ const Perks = ({selected,onChange}) => {
         </div>
         <div style={{ display: "inline-block", marginLeft: "2px" }}>
           <label className="flex border border-gray-500 p-2 gap-3 cursor-pointer">
-            <input type="checkbox" />
+            <input type="checkbox" onChange={handleCheckBox} name='TV' />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -48,22 +57,8 @@ const Perks = ({selected,onChange}) => {
         </div>
         <div style={{ display: "inline-block", marginLeft: "2px" }}>
           <label className="flex border border-gray-500 p-2 gap-3 cursor-pointer">
-            <input type="checkbox" />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"
-              />
-            </svg>
-            <span>Free parking spot</span>
+            <input type="checkbox" name='breakfast' onChange={handleCheckBox}  />
+            <span>Breakfast</span>
           </label>
         </div>
       </div>

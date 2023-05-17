@@ -15,7 +15,12 @@ const placeSchema = new mongoose.Schema({
     extraInfo : String,
     checkIn : String,
     checkOut : String,
-    maxGuests : Number
+    maxGuests : Number,
+    owner : {
+        type : mongoose.Types.ObjectId,
+        required : true,
+        ref : 'User'
+    }
 })
 
 const placeModel = mongoose.model('Place',placeSchema);

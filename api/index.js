@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/user');
+const placesRoutes = require('./routes/places');
 const imageDownloader = require('image-downloader');
 const mongoose = require('mongoose');
 const multer = require('multer');
@@ -25,6 +26,7 @@ app.use(cors({
 }))
 
 app.use(userRoutes);
+app.use('/places',placesRoutes);
 //Uploading photos by link
 app.post('/upload-by-link',async (req,res)=>{
     const {link} = req.body;

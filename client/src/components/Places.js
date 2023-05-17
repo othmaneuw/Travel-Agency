@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import Perks from "./Perks";
 import axios from "axios";
@@ -18,6 +18,7 @@ const Places = () => {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [maxGuests, setMaxGuests] = useState();
+  const [redirect,setRedirect] = useState('');
   const inputTitle = (title) => {
     return <h2 className={headingStyle}>{title}</h2>;
   };
@@ -28,6 +29,7 @@ const Places = () => {
     setAddedPhotos((prev) => {
       return [...prev, data];
     });
+    setPhotoLink('');
     //console.log(addedPhotos);
   };
 
@@ -45,6 +47,27 @@ const Places = () => {
                 return [...prev,...data];
               })
             })
+  }
+
+  const addPlace = async (e) =>{
+       e.preventDefault();
+       const placeData = {
+        title,
+        address,
+        photos : addedPhotos,
+        description,
+        perks,
+        extraInfo,
+        checkIn,
+        checkOut,
+        maxGuests
+       }
+       await axios.post('/places',placeData,{withCredentials:true});
+       setRedirect('/account/places');
+  }
+
+  if(redirect){
+    return <Navigate to={redirect} />
   }
 
   return (
@@ -73,7 +96,7 @@ const Places = () => {
       )}
       {action === "new" && (
         <div>
-          <form>
+          <form onSubmit={addPlace} >
             {inputTitle("Title")}
             <input
               type="text"
@@ -109,8 +132,8 @@ const Places = () => {
             </div>
             <div className="text-left mt-2 flex items-center">
               {addedPhotos.length > 0 &&
-                addedPhotos.map((link) => (
-                  <div className="flex ">
+                addedPhotos.map((link,index) => (
+                  <div className="flex" key={index}>
                     <img
                       width="100px"
                       height="100px"
