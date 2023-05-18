@@ -64,10 +64,14 @@ const Register = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="primary">Register</button>
+          <div className="text-center">
+            <button className="bg-primary py-3 px-20 text-white font-bold rounded-full">
+              Register
+            </button>
+          </div>
           <div className="text-center text-gray-500">
             Already a member ?{" "}
-            <Link to="/login" className="underline text-black">
+            <Link to="/login" className="underline text-primary">
               Login
             </Link>
           </div>

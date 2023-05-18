@@ -1,11 +1,11 @@
 import axios from "axios";
-import { useState,useContext } from "react";
+import { useState, useContext } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 
 const Login = () => {
-  const {setUser,user} = useContext(UserContext);
-  console.log("hello",user);
+  const { setUser, user } = useContext(UserContext);
+  console.log("hello", user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
@@ -66,10 +66,14 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="primary">Login</button>
+          <div className="text-center">
+            <button className="bg-primary py-3 px-20 text-white font-bold rounded-full">
+              Login
+            </button>
+          </div>
           <div className="text-center text-gray-500">
             Don't have an account ?
-            <Link to="/register" className="underline text-black">
+            <Link to="/register" className="underline text-primary">
               Register now
             </Link>
           </div>

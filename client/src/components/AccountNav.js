@@ -13,7 +13,7 @@ const AccountNav = () => {
   const linkClasses = (type) => {
     let classes = "inline-flex gap-1 py-2 px-6";
     if (type === subpage) {
-      classes += " bg-primary rounded-full text-white";
+      classes += " bg-primary rounded-full text-white font-bold";
     }
     return classes;
   };

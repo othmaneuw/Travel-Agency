@@ -61,7 +61,7 @@ const Header = () => {
             d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
           />
         </svg>
-        <div className="border border-gray-300 bg-gray-500 text-white rounded-full p-1 overflow-hidden">
+        <div className="border border-gray-300 bg-primary text-white rounded-full p-1 overflow-hidden">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

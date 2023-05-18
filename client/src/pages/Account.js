@@ -36,9 +36,9 @@ const Account = () => {
       <AccountNav />
         <div className="text-center mt-8">
           <p className="text-center">
-            Logged in as <span className="text-red-400">{user.name} ({user.email})</span>
+            Logged in as <span className="text-primary">{user.name} ({user.email})</span>
           </p>
-          <button className="primary max-w-sm mt-6" onClick={logout}>
+          <button className="bg-primary py-3 px-20 rounded-full text-white font-bold max-w-sm mt-6" onClick={logout}>
             Logout
           </button>
         </div>
