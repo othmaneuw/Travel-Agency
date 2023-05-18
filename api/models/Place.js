@@ -20,7 +20,8 @@ const placeSchema = new mongoose.Schema({
         type : mongoose.Types.ObjectId,
         required : true,
         ref : 'User'
-    }
+    },
+    price : Number
 })
 
 const placeModel = mongoose.model('Place',placeSchema);
