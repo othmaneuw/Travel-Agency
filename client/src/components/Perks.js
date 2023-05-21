@@ -19,7 +19,7 @@ const Perks = ({selected,onChange}) => {
           style={{ display: "inline-block", marginLeft: "2px" }}
         >
           <label className="flex border border-gray-500 p-2 gap-3 cursor-pointer">
-            <input type="checkbox" onChange={handleCheckBox} name='Wifi' />
+            <input type="checkbox" checked={selected.includes('Wifi')} onChange={handleCheckBox} name='Wifi' />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -37,7 +37,7 @@ const Perks = ({selected,onChange}) => {
         </div>
         <div style={{ display: "inline-block", marginLeft: "2px" }}>
           <label className="flex border border-gray-500 p-2 gap-3 cursor-pointer">
-            <input type="checkbox" onChange={handleCheckBox} name='TV' />
+            <input type="checkbox" checked={selected.includes('TV')} onChange={handleCheckBox} name='TV' />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -57,7 +57,7 @@ const Perks = ({selected,onChange}) => {
         </div>
         <div style={{ display: "inline-block", marginLeft: "2px" }}>
           <label className="flex border border-gray-500 p-2 gap-3 cursor-pointer">
-            <input type="checkbox" name='breakfast' onChange={handleCheckBox}  />
+            <input type="checkbox" checked={selected.includes('breakfast')} name='breakfast' onChange={handleCheckBox}  />
             <span>Breakfast</span>
           </label>
         </div>

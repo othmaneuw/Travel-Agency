@@ -29,7 +29,33 @@ const ShowPlacesByUser = async (req,res) =>{
     })
 }
 
+const findPlaceById = async (req,res) =>{
+    const {id} = req.params;
+    const place = await Place.findById(id);
+    res.status(200).json(place);
+}
+
+const updatePlace = async (req,res) =>{
+    const {token} = req.cookies;
+    jwt.verify(token,process.env.JWT_SECRET,{},async (err,userData) =>{
+        if(err) throw err;
+        const placeDoc = await Place.findById(req.body.id);
+        if(placeDoc.owner.toString() === userData.id){
+            placeDoc.set({...req.body});
+            await placeDoc.save();
+            res.json('ok');
+        }
+    })
+}
+
+const getAllPlaces = async (req,res) =>{
+    res.json(await Place.find({}));
+}
+
 module.exports = {
     addPlace,
     ShowPlacesByUser,
+    findPlaceById,
+    updatePlace,
+    getAllPlaces,
 }
