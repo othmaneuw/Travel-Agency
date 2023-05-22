@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import BookingWidget from "../components/BookingWidget";
 
 const SinglePlace = () => {
   const { id } = useParams();
@@ -131,7 +132,8 @@ const SinglePlace = () => {
         <h2 className="font-semibold text-2xl">Description</h2>
         {place.description}
       </div>
-      <div></div>
+      <hr></hr>
+      <BookingWidget place={place} />
     </div>
   );
 };
