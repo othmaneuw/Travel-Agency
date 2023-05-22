@@ -43,8 +43,12 @@ const BookingWidget = ({ place }) => {
               <input type="date" className="text-black px-5 rounded-xl" />
             </div>
           </div>
+          <div className="mt-4 flex gap-4 justify-center">
+            <label>Number of persons :</label>
+            <input type="number" className="text-black" />
+          </div>
           <div className="mt-5">
-            <button className="bg-white py-2 px-4 text-primary rounded-2xl">
+            <button className="bg-white mb-4 py-2 px-4 text-primary rounded-2xl">
               Book the trip
             </button>
           </div>
@@ -56,7 +60,7 @@ const BookingWidget = ({ place }) => {
         <p className="text-md mt-5 text-primary font-bold">{place.extraInfo}</p>
       </div>
       <div className="mt-5">
-        <Link to='/'>
+        <Link to="/">
           <button className=" flex gap-3 bg-primary py-2 px-4 rounded-full text-white font-bold">
             <svg
               xmlns="http://www.w3.org/2000/svg"
