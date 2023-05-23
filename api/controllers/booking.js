@@ -20,6 +20,18 @@ const bookTheTrip = async (req, res) => {
   })
 };
 
+const getBookingsByUser = async (req,res) =>{
+  const {token} = req.cookies;
+  console.log(token);
+  jwt.verify(token,process.env.JWT_SECRET,{},async (err,userData)=>{
+     if(err) throw err;
+     console.log('We re good');
+     const bookingsDoc = await Booking.find({user : userData.id}).populate('place');
+     res.status(200).json(bookingsDoc);
+  });
+}
+
 module.exports = {
     bookTheTrip,
+    getBookingsByUser,
 }
