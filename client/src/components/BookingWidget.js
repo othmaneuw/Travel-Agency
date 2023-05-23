@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { differenceInCalendarDays } from "date-fns";
 import { UserContext } from "../context/UserContext";
@@ -9,9 +9,10 @@ const BookingWidget = ({ place }) => {
   const [checkOut, setCheckOut] = useState("");
   const [numberOfPersons, setNumberOfPersons] = useState(1);
   const [phone, setPhone] = useState("");
-  const [redirect,setRedirect] = useState('');
+  const [name, setName] = useState("");
+  const [redirect, setRedirect] = useState("");
   const { user } = useContext(UserContext);
-  //console.log(user);
+  console.log(user);
   let numberOfDays;
   if (checkIn && checkOut) {
     numberOfDays = differenceInCalendarDays(
@@ -20,18 +21,28 @@ const BookingWidget = ({ place }) => {
     );
     //console.log('hello',numberOfDays);
   }
-  const bookTheTrip = async () =>{
-       const bookingInfo = {
-        checkIn,checkOut,numberOfPersons,
-        phone,
-        price : place.price*numberOfPersons,
-        place : place._id
-       }
-      const {data} = await axios.post('/bookings/add',bookingInfo,{withCredentials:true});
-      setRedirect(`/account/bookings/${data._id}`);
-  }
-  if(redirect){
-    <Navigate to={redirect} />
+  const bookTheTrip = async () => {
+    const bookingInfo = {
+      checkIn,
+      checkOut,
+      numberOfPersons,
+      phone,
+      price: place.price * numberOfPersons,
+      place: place._id,
+      name
+    };
+    const { data } = await axios.post("/bookings/add", bookingInfo, {
+      withCredentials: true,
+    });
+    setRedirect(`/account/bookings/${data._id}`);
+  };
+  useEffect(()=>{
+     if(user){
+      setName(user.name);
+     }
+  },[user]);
+  if (redirect) {
+    return <Navigate to={redirect} />;
   }
   return (
     <div>
@@ -95,26 +106,44 @@ const BookingWidget = ({ place }) => {
             />
           </div>
           {checkIn && checkOut && (
-            <div className="mt-4 flex gap-4 justify-center">
-              <label>Your Phone Number :</label>
-              <input
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="text-black"
-              />
+            <div>
+              <div className="mt-4 flex gap-4 justify-center">
+                <label>Full Name :</label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="text-black"
+                />
+              </div>
+              <div className="mt-4 flex gap-4 justify-center">
+                <label>Your Phone Number :</label>
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="text-black"
+                />
+              </div>
             </div>
           )}
           <div className="mt-5">
             <button
               disabled={
-                user && checkIn && checkOut && numberOfPersons && phone && numberOfPersons > 0 ? false : true
+                user &&
+                checkIn &&
+                checkOut &&
+                numberOfPersons &&
+                phone &&
+                numberOfPersons > 0
+                  ? false
+                  : true
               }
               onClick={bookTheTrip}
               className="bg-white mb-4 py-2 px-4 text-primary rounded-2xl"
             >
               Book the trip
-              {numberOfDays && `(${place.price * numberOfPersons})`}
+              {numberOfDays && `(${place.price * numberOfPersons} MAD)`}
             </button>
           </div>
         </div>

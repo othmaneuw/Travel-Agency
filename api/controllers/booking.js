@@ -2,7 +2,7 @@ const Booking = require('../models/Booking');
 const jwt = require('jsonwebtoken');
 
 const bookTheTrip = async (req, res) => {
-  const { checkIn, checkOut, numberOfPersons, phone, place, price } = req.body;
+  const { checkIn, checkOut, numberOfPersons, phone, place, price,name } = req.body;
   const {token} = req.cookies;
   jwt.verify(token,process.env.JWT_SECRET,{},async (err,userData)=>{
     if(err) throw err;
@@ -13,7 +13,8 @@ const bookTheTrip = async (req, res) => {
       phone,
       price,
       place,
-      user : userData.id
+      user : userData.id,
+      name
     });
     res.status(201).json(bookingDoc);
   })

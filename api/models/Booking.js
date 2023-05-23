@@ -30,7 +30,8 @@ const bookingSchema = new mongoose.Schema({
     price : {
         required:true,
         type : Number
-    }
+    },
+    name : {type : String,required:true}
 },{timestamps:true});
 
 const BookingModel = mongoose.model('Booking',bookingSchema);
