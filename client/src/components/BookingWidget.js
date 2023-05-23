@@ -1,6 +1,38 @@
-import { Link } from "react-router-dom";
+import { useState, useContext } from "react";
+import { Link, Navigate } from "react-router-dom";
+import { differenceInCalendarDays } from "date-fns";
+import { UserContext } from "../context/UserContext";
+import axios from "axios";
 
 const BookingWidget = ({ place }) => {
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [numberOfPersons, setNumberOfPersons] = useState(1);
+  const [phone, setPhone] = useState("");
+  const [redirect,setRedirect] = useState('');
+  const { user } = useContext(UserContext);
+  //console.log(user);
+  let numberOfDays;
+  if (checkIn && checkOut) {
+    numberOfDays = differenceInCalendarDays(
+      new Date(checkOut),
+      new Date(checkIn)
+    );
+    //console.log('hello',numberOfDays);
+  }
+  const bookTheTrip = async () =>{
+       const bookingInfo = {
+        checkIn,checkOut,numberOfPersons,
+        phone,
+        price : place.price*numberOfPersons,
+        place : place._id
+       }
+      const {data} = await axios.post('/bookings/add',bookingInfo,{withCredentials:true});
+      setRedirect(`/account/bookings/${data._id}`);
+  }
+  if(redirect){
+    <Navigate to={redirect} />
+  }
   return (
     <div>
       <div className="mt-10 grid grid-cols-2 gap-6">
@@ -36,20 +68,53 @@ const BookingWidget = ({ place }) => {
           <div className="mt-4 grid grid-cols-2">
             <div>
               <label>Check In : </label>
-              <input type="date" className="text-black px-5 rounded-xl" />
+              <input
+                value={checkIn}
+                onChange={(e) => setCheckIn(e.target.value)}
+                type="date"
+                className="text-black px-5 rounded-xl"
+              />
             </div>
             <div>
               <label>Check Out : </label>
-              <input type="date" className="text-black px-5 rounded-xl" />
+              <input
+                type="date"
+                value={checkOut}
+                onChange={(e) => setCheckOut(e.target.value)}
+                className="text-black px-5 rounded-xl"
+              />
             </div>
           </div>
           <div className="mt-4 flex gap-4 justify-center">
             <label>Number of persons :</label>
-            <input type="number" className="text-black" />
+            <input
+              type="number"
+              value={numberOfPersons}
+              onChange={(e) => setNumberOfPersons(e.target.value)}
+              className="text-black"
+            />
           </div>
+          {checkIn && checkOut && (
+            <div className="mt-4 flex gap-4 justify-center">
+              <label>Your Phone Number :</label>
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="text-black"
+              />
+            </div>
+          )}
           <div className="mt-5">
-            <button className="bg-white mb-4 py-2 px-4 text-primary rounded-2xl">
+            <button
+              disabled={
+                user && checkIn && checkOut && numberOfPersons && phone && numberOfPersons > 0 ? false : true
+              }
+              onClick={bookTheTrip}
+              className="bg-white mb-4 py-2 px-4 text-primary rounded-2xl"
+            >
               Book the trip
+              {numberOfDays && `(${place.price * numberOfPersons})`}
             </button>
           </div>
         </div>
