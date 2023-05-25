@@ -1,14 +1,14 @@
-import { useLocation,Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 
 const AccountNav = () => {
-  const {user} = useContext(UserContext); 
-  const {pathname} = useLocation();
-  let subpage = pathname.split('/')[2];
+  const { user } = useContext(UserContext);
+  const { pathname } = useLocation();
+  let subpage = pathname.split("/")[2];
   console.log(subpage);
-  if(!subpage){
-     subpage = 'profile';
+  if (!subpage) {
+    subpage = "profile";
   }
   const linkClasses = (type) => {
     let classes = "inline-flex gap-1 py-2 px-6";
@@ -36,7 +36,11 @@ const AccountNav = () => {
         </svg>
         My profile
       </Link>
-      <Link className={linkClasses("bookings")} to="/account/bookings">
+      <Link className={linkClasses("bookings")} to={
+            user.name === "othmane" || user.name === "ziyad"
+              ? "/admin/bookings"
+              : "/account/bookings"
+          }>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -51,10 +55,13 @@ const AccountNav = () => {
             d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
           />
         </svg>
-        My bookings
+        {(user.name === 'othmane' || user.name==='ziyad') ? 'All Bookings':'My bookings'}
       </Link>
-      {(user.name === "othmane" || user.name==="ziyad") && (
-        <Link className={linkClasses("places")} to="/account/places">
+      {(user.name === "othmane" || user.name === "ziyad") && (
+        <Link
+          className={linkClasses("places")}
+          to='/account/places'
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

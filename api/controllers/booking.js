@@ -31,7 +31,12 @@ const getBookingsByUser = async (req,res) =>{
   });
 }
 
+const getAllBooking = async (req,res) =>{
+  res.status(200).json(await Booking.find({}).populate('place').populate('user'));
+}
+
 module.exports = {
     bookTheTrip,
     getBookingsByUser,
+    getAllBooking,
 }

@@ -29,18 +29,18 @@ const BookingWidget = ({ place }) => {
       phone,
       price: place.price * numberOfPersons,
       place: place._id,
-      name
+      name,
     };
     const { data } = await axios.post("/bookings/add", bookingInfo, {
       withCredentials: true,
     });
     setRedirect(`/account/bookings/${data._id}`);
   };
-  useEffect(()=>{
-     if(user){
+  useEffect(() => {
+    if (user) {
       setName(user.name);
-     }
-  },[user]);
+    }
+  }, [user]);
   if (redirect) {
     return <Navigate to={redirect} />;
   }
@@ -135,7 +135,9 @@ const BookingWidget = ({ place }) => {
                 checkOut &&
                 numberOfPersons &&
                 phone &&
-                numberOfPersons > 0
+                numberOfPersons > 0 &&
+                user.name !== "othmane" &&
+                user.name !== "ziyad"
                   ? false
                   : true
               }
