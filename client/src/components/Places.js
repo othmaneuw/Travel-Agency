@@ -56,7 +56,7 @@ const Places = () => {
                 </p>
                 <Link to={`/account/places/${place._id}`}>
                   <button className="mt-5 bg-orange-500 p-4 text-white font-bold rounded-2xl">
-                    Discover more ...
+                    Edit the Trip
                   </button>
                 </Link>
               </div>

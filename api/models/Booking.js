@@ -10,7 +10,7 @@ const bookingSchema = new mongoose.Schema({
         required:true,
     },
     numberOfPersons : {
-        type : Date,
+        type : Number,
         required : true
     },
     phone : {
@@ -33,9 +33,8 @@ const bookingSchema = new mongoose.Schema({
     },
     name : {type : String,required:true},
     status : {
-        enum : {
-            values : ['valid','canceled','pending'],
-        }
+        type : String,
+        required : true
     }
 },{timestamps:true});
 

@@ -10,6 +10,7 @@ const Bookings = () => {
       withCredentials: true,
     });
     setBookings(response.data);
+    //console.log(response.data);
   };
   useEffect(() => {
     getBookings();
