@@ -12,6 +12,7 @@ const SearchTrip = () => {
     const searchedTrips = allTrips.filter(trip => trip.address.toLowerCase().includes(searchedTrip.toLocaleLowerCase()));
     console.log(searchedTrips);
     setGlobalTrip(searchedTrips);
+    localStorage.setItem('trip',JSON.stringify(searchedTrips));
     setRedirect(true);
   }
   if(redirect){

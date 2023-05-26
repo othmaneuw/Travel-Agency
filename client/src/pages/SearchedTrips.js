@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { TripContext } from "../context/TripContext";
 
 const SearchedTrips = () =>{
@@ -8,7 +8,7 @@ const SearchedTrips = () =>{
         <div>
             {globalTrip.map(trip => (
                 <div>
-                    {trip.title} hello
+                    {trip.title} 
                 </div>
             ))}
         </div>

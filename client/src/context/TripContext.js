@@ -5,7 +5,8 @@ export const TripContext = createContext({});
 export const TripContextProvider = ({ children }) => {
   const [globalTrip, setGlobalTrip] = useState([]);
   useEffect(() => {
-    console.log('hey',globalTrip);
+    const trip = JSON.parse(localStorage.getItem('trip'));
+        setGlobalTrip(trip);
   }, []);
   return (
     <TripContext.Provider value={{ globalTrip, setGlobalTrip }}>
