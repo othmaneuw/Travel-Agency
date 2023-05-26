@@ -34,7 +34,7 @@ const BookingWidget = ({ place }) => {
     const { data } = await axios.post("/bookings/add", bookingInfo, {
       withCredentials: true,
     });
-    setRedirect(`/account/bookings/${data._id}`);
+    setRedirect(`/account/`);
   };
   useEffect(() => {
     if (user) {

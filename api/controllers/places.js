@@ -52,10 +52,16 @@ const getAllPlaces = async (req,res) =>{
     res.json(await Place.find({}));
 }
 
+const filterTrips = async (req,res) =>{
+    console.log('hello');
+    res.send('ok');
+}
+
 module.exports = {
     addPlace,
     ShowPlacesByUser,
     findPlaceById,
     updatePlace,
     getAllPlaces,
+    filterTrips,
 }

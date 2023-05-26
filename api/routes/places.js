@@ -5,6 +5,7 @@ const {
   findPlaceById,
   updatePlace,
   getAllPlaces,
+  filterTrips,
 } = require("../controllers/places");
 
 const router = express.Router();
@@ -14,5 +15,8 @@ router.get("/user", ShowPlacesByUser);
 router.get("/:id", findPlaceById);
 router.put("/", updatePlace);
 router.get("/", getAllPlaces);
+// router.get('/search',(req,res)=>{
+//   res.send('ok');
+// });
 
 module.exports = router;

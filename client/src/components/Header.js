@@ -3,10 +3,11 @@ import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
 
 const Header = () => {
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
+ 
   return (
-    <header className="p-4 flex justify-between">
-      <Link to='/' className="flex items-center gap-1">
+    <header className="p-4 flex justify-between items-start">
+      <Link to="/" className="flex items-center gap-1">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -29,7 +30,7 @@ const Header = () => {
         <div>Any week</div>
         <div className="border-l border-gray-300"></div>
         <div>Search guest</div>
-        <button className="bg-primary rounded-full text-white p-1">
+        {/* <button className="bg-primary rounded-full text-white p-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -44,9 +45,13 @@ const Header = () => {
               d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
             />
           </svg>
-        </button>
+        </button> */}
       </div>
-      <Link to={user ? '/account' : '/login'} className="flex border border-gray-300 rounded-full gap-1 px-3 py-4 items-center">
+      
+      <Link
+        to={user ? "/account" : "/login"}
+        className="flex border border-gray-300 rounded-full gap-1 px-3 py-4 items-center"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

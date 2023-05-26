@@ -1,9 +1,17 @@
+import axios from "axios";
 import { format, differenceInCalendarDays } from "date-fns";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, Navigate } from "react-router-dom";
 
 const Booking = ({ booking, admin }) => {
+  const [redirect,setRedirect] = useState(false);
+  const cancelTrip = async (id) =>{
+       axios.put(`/bookings/${id}`,{status : 'canceled'}).then(response => setRedirect(true));
+  }
+  if(redirect) return <Navigate to='/account' />
   return (
-    <div className="mt-20 flex gap-10 items-center bg-gray-200 rounded-2xl">
+    <div>
+      <div className="mt-20 flex gap-10 items-center bg-gray-200 rounded-2xl">
       <div>
         <img
           width="300px"
@@ -97,13 +105,14 @@ const Booking = ({ booking, admin }) => {
         </h3>
       </div>
       {!admin && (
-        <div className="px-40 py-20">
+        <div className="px-10 py-10 flex gap-2">
           <Link
             to={`/account/bookings/${booking._id}`}
             className="bg-primary py-4 px-8 text-white font-bold rounded-xl"
           >
             See More...
           </Link>
+          <button className="bg-red-500 text-white px-2 font-bold rounded-xl" onClick={()=>cancelTrip(booking._id)}>Cancel</button>
         </div>
       )}
       {admin && (
@@ -112,6 +121,8 @@ const Booking = ({ booking, admin }) => {
             <button className="bg-red-500 text-white py-2 px-4 font-bold rounded-xl">Cancel</button>
         </div>
       )}
+    </div>
+    <p className="text-green-500 font-bold mt-2 text-center">This booking was just validated by the admin</p>
     </div>
   );
 };

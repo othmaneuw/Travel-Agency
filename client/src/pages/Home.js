@@ -1,18 +1,22 @@
 import axios from "axios";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import SearchTrip from "../components/SearchTrip";
 
 const Home = () => {
-    const [places,setPlaces] = useState([]);
-    const getPlaces = async () =>{
-        const response = await axios.get('/places');
-        setPlaces(response.data);
-    }
-    useEffect(()=>{
-        getPlaces();
-    },[]);
-    return ( 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8 mt-10">
+  const [places, setPlaces] = useState([]);
+  const getPlaces = async () => {
+    const response = await axios.get("/places");
+    setPlaces(response.data);
+  };
+  
+  useEffect(() => {
+    getPlaces();
+  }, []);
+  return (
+    <div>
+      <SearchTrip />
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8 mt-10">
             {places.length > 0 && places.map(place =>(
                 <Link to={`/place/${place._id}`} key={place._id}>
                     <div className="mb-3">
@@ -24,7 +28,8 @@ const Home = () => {
                 </Link>
             ))}
         </div>
-     );
-}
- 
+    </div>
+  );
+};
+
 export default Home;

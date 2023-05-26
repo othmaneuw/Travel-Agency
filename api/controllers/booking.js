@@ -27,7 +27,8 @@ const getBookingsByUser = async (req,res) =>{
   jwt.verify(token,process.env.JWT_SECRET,{},async (err,userData)=>{
      if(err) throw err;
      console.log('We re good');
-     const bookingsDoc = await Booking.find({user : userData.id,status:'valid'}).populate('place');
+     const bookingsDoc = await Booking.find({user : userData.id}).populate('place');
+     console.log(bookingsDoc);
      res.status(200).json(bookingsDoc);
   });
 }
@@ -38,14 +39,24 @@ const getAllBooking = async (req,res) =>{
 
 const updateBookingStatus = async (req,res) =>{
   const {id} = req.params;
+  const {status} = req.body;
+  console.log(status);
   console.log(id);
-  const bookingDoc = await Booking.findByIdAndUpdate({_id:id},{status:'valid'},{new:true}).populate('user').populate('place');
+  const bookingDoc = await Booking.findByIdAndUpdate({_id:id},{status},{new:true}).populate('user').populate('place');
   res.status(200).json(bookingDoc);
+}
+
+const deleteBooking = async (req,res) =>{
+    const {id} = req.params;
+    await Booking.findByIdAndDelete(id);
+    const allBookings = await Booking.find().populate('user').populate('place');
+    res.status(200).json(allBookings);
 }
 
 module.exports = {
     bookTheTrip,
     getBookingsByUser,
     getAllBooking,
-    updateBookingStatus
+    updateBookingStatus,
+    deleteBooking
 }
