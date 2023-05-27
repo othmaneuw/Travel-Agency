@@ -2,6 +2,7 @@ import AccountNav from "../components/AccountNav";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Booking from "../components/Booking";
+import SearchTrip from "../components/SearchTrip";
 
 const Bookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -17,6 +18,7 @@ const Bookings = () => {
   }, []);
   return (
     <div>
+      <SearchTrip />
       <AccountNav />
       {bookings.length === 0 && (
         <h1 className=" flex gap-2 items-end text-primary font-bold text-xl text-center text-xl mt-10">

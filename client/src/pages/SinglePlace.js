@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BookingWidget from "../components/BookingWidget";
+import SearchTrip from "../components/SearchTrip";
 
 const SinglePlace = () => {
   const { id } = useParams();
@@ -60,6 +61,7 @@ const SinglePlace = () => {
   if (!place) return "Loading ...";
   return (
     <div>
+      <SearchTrip />
       <h1 className="text-2xl font-bold">{place.title}</h1>
       <a
         className="flex gap-2 underline mt-3"

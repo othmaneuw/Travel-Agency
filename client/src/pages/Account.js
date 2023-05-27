@@ -3,6 +3,7 @@ import { UserContext } from "../context/UserContext";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
 import AccountNav from "../components/AccountNav";
+import SearchTrip from "../components/SearchTrip";
 
 const Account = () => {
   const { user, ready, setUser } = useContext(UserContext);
@@ -33,6 +34,7 @@ const Account = () => {
 
   return (
     <div>
+      <SearchTrip />
       <AccountNav />
         <div className="text-center mt-8">
           <p className="text-center">

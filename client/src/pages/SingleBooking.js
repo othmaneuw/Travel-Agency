@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { format } from "date-fns";
+import SearchTrip from "../components/SearchTrip";
 
 const SingleBooking = () => {
   const { id } = useParams();
@@ -62,6 +63,7 @@ const SingleBooking = () => {
   }
   return (
     <div className="mt-10">
+      <SearchTrip />
       {booking && (
         <div className="bg-primary py-10 px-10 rounded-xl text-white font-bold">
           <h1 className="text-2xl">{booking.place.title}</h1>
