@@ -14,6 +14,10 @@ const SingleReview = () => {
       await axios.put('/reviews/'+id);
       setRedirect(true);
   }
+  const deleteReview = async () =>{
+    await axios.delete('/reviews/'+id);
+    setRedirect(true);
+  }
   if(redirect){
     return <Navigate to='/account/reviews' />
   }
@@ -110,7 +114,7 @@ const SingleReview = () => {
           </h4>
           <div className="mt-7 flex gap-2 justify-center">
               <button className="bg-green-500 py-2 px-4 rounded-2xl" onClick={()=>validateReview(id)}>Validate</button>
-              <button className="bg-red-500 py-2 px-4 rounded-2xl">Cancel</button>
+              <button className="bg-red-500 py-2 px-4 rounded-2xl" onClick={deleteReview}>Cancel</button>
           </div>
         </div>
       )}

@@ -46,9 +46,15 @@ const validateReview = async (req,res) =>{
   res.json(reviewDoc);
 }
 
+const deleteReview = async  (req,res) =>{
+     await Review.findByIdAndRemove(req.params.id);
+     res.json({mssg : "deleted succesfully"});
+}
+
 module.exports = {
   addReview,
   getAllReviews,
   getReviewById,
-  validateReview
+  validateReview,
+  deleteReview
 };
