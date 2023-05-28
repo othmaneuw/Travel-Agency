@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import AccountNav from "../components/AccountNav";
 import { format } from "date-fns";
+import SearchTrip from "../components/SearchTrip";
 
 const AdminBookings = () => {
   const [allBookings, setAllBookings] = useState([]);
@@ -44,6 +45,7 @@ const AdminBookings = () => {
 
   return (
     <div>
+      <SearchTrip />
       {allBookings.length > 0 && (
         <div>
           <AccountNav />

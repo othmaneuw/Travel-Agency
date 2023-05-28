@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import AccountNav from "./AccountNav";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import SearchTrip from "./SearchTrip";
 
 const Places = () => {
   const [places, setPlaces] = useState([]);
@@ -12,6 +13,7 @@ const Places = () => {
   }, []);
   return (
     <div>
+      <SearchTrip />
       <AccountNav />
       <div className="text-center mt-10">
         <Link

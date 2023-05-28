@@ -15,6 +15,9 @@ import SingleBooking from "./pages/SingleBooking";
 import AdminBookings from "./pages/AdminBookings";
 import { TripContextProvider } from "./context/TripContext";
 import SearchedTrips from "./pages/SearchedTrips";
+import AdminReviews from "./pages/AdminReviews";
+import SingleReview from "./pages/SingleReview";
+
 
 axios.defaults.baseURL = "http://localhost:4000";
 
@@ -37,6 +40,8 @@ function App() {
               <Route path="/account/bookings/:id" element={<SingleBooking />} />
               <Route path="/admin/bookings" element={<AdminBookings />} />
               <Route path="/searched-trips" element={<SearchedTrips />} />
+              <Route path="/account/reviews" element={<AdminReviews />}  />
+              <Route path="/account/reviews/:id" element={<SingleReview />}  />
             </Route>
           </Routes>
         </UserContextProvider>
