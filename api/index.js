@@ -6,6 +6,7 @@ const userRoutes = require('./routes/user');
 const placesRoutes = require('./routes/places');
 const bookingsRoutes = require('./routes/booking');
 const imageDownloader = require('image-downloader');
+const reviewsRoutes = require('./routes/reviews');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const fs = require('fs');
@@ -30,6 +31,8 @@ app.use(cors({
 app.use(userRoutes);
 app.use('/places',placesRoutes);
 app.use('/bookings',bookingsRoutes);
+app.use('/reviews',reviewsRoutes);
+
 //Uploading photos by link
 app.post('/upload-by-link',async (req,res)=>{
     const {link} = req.body;

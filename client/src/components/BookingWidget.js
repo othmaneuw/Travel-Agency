@@ -3,6 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import { differenceInCalendarDays } from "date-fns";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
+import Reviews from "./Reviews";
 
 const BookingWidget = ({ place }) => {
   const [checkIn, setCheckIn] = useState("");
@@ -155,6 +156,7 @@ const BookingWidget = ({ place }) => {
         <h2 className="text-2xl">Extra Infos</h2>
         <p className="text-md mt-5 text-primary font-bold">{place.extraInfo}</p>
       </div>
+      <Reviews trip={place}/>
       <div className="mt-5">
         <Link to="/">
           <button className=" flex gap-3 bg-primary py-2 px-4 rounded-full text-white font-bold">
