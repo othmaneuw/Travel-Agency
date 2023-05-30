@@ -1,12 +1,23 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Reviews = ({ trip }) => {
+  const [reviews, setReviews] = useState([]);
   const [showReviews, setShowReviews] = useState(false);
   const [addReview, setAddReview] = useState(false);
   const [review, setReview] = useState("");
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+  useEffect(() => {
+    axios.get("/reviews").then((response) => {
+      const validReviews = response.data.filter(
+        (review) =>
+          (review.status === "valid" && review.trip._id === trip._id)
+      );
+      setReviews(validReviews);
+      console.log(validReviews);
+    });
+  }, []);
   const submitReview = async (e) => {
     e.preventDefault();
     setReviewSubmitted(false);
@@ -25,6 +36,7 @@ const Reviews = ({ trip }) => {
       setError(error.response.data.mssg);
     }
   };
+
   return (
     <div className="mt-10 bg-primary text-white font-bold p-10 rounded-2xl">
       <h2 className="flex gap-2 items-center text-2xl">
@@ -74,7 +86,14 @@ const Reviews = ({ trip }) => {
       </div>
       {showReviews && (
         <div className="mt-5">
-          <div>hello</div>
+          <div className="bg-gray-700 p-8 rounded-xl">
+            <h3 className="text-xl text-center">Reviews</h3>
+            {reviews.length > 0 && reviews.map(review =>(
+              <div>
+                {review.body}
+              </div>
+            ))}
+          </div>
         </div>
       )}
       {addReview && (
@@ -101,7 +120,7 @@ const Reviews = ({ trip }) => {
           )}
           {error && (
             <div className="my-3">
-                <h4 className="text-center text-red-500">{error}</h4>
+              <h4 className="text-center text-red-500">{error}</h4>
             </div>
           )}
         </div>

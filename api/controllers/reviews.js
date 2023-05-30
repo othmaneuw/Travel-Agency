@@ -33,28 +33,37 @@ const getAllReviews = (req, res) => {
     .then((response) => res.status(StatusCodes.OK).json(response));
 };
 
-const getReviewById = async (req,res) =>{
-    const {id} = req.params;
-    const reviewDoc = await Review.findById(id).populate('user').populate('trip');
-    res.status(StatusCodes.OK).json(reviewDoc);
-}
+const getReviewById = async (req, res) => {
+  const { id } = req.params;
+  const reviewDoc = await Review.findById(id).populate("user").populate("trip");
+  res.status(StatusCodes.OK).json(reviewDoc);
+};
 
-const validateReview = async (req,res) =>{
-  const {id} = req.params;
+const validateReview = async (req, res) => {
+  const { id } = req.params;
   console.log(id);
-  const reviewDoc = await Review.findByIdAndUpdate({_id:id},{status : 'valid'},{new:true});
+  const reviewDoc = await Review.findByIdAndUpdate(
+    { _id: id },
+    { status: "valid" },
+    { new: true }
+  );
   res.json(reviewDoc);
-}
+};
 
-const deleteReview = async  (req,res) =>{
-     await Review.findByIdAndRemove(req.params.id);
-     res.json({mssg : "deleted succesfully"});
-}
+const deleteReview = async (req, res) => {
+  await Review.findByIdAndRemove(req.params.id);
+  res.json({ mssg: "deleted succesfully" });
+};
+
+const getValidReviews = async (req, res) => {
+  res.status(StatusCodes.OK).send('heello');
+};
 
 module.exports = {
   addReview,
   getAllReviews,
   getReviewById,
   validateReview,
-  deleteReview
+  deleteReview,
+  getValidReviews,
 };
