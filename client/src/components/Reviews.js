@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { UserContext } from "../context/UserContext";
+import {Navigate} from 'react-router-dom';
 
 const Reviews = ({ trip }) => {
   const { user } = useContext(UserContext);
@@ -11,6 +12,7 @@ const Reviews = ({ trip }) => {
   const [review, setReview] = useState("");
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [redirect,setRedirect] = useState(false);
   useEffect(() => {
     axios.get("/reviews").then((response) => {
       const validReviews = response.data.filter(
@@ -38,6 +40,14 @@ const Reviews = ({ trip }) => {
       setError(error.response.data.mssg);
     }
   };
+
+  const removeReview = (id) =>{
+    axios.delete(`/reviews/${id}`).then(response => setRedirect(true))
+  }
+
+  if(redirect){
+    return <Navigate to='/' />
+  }
 
   return (
     <div className="mt-10 bg-primary text-white font-bold p-10 rounded-2xl">
@@ -90,6 +100,7 @@ const Reviews = ({ trip }) => {
         <div className="mt-5">
           <div className="bg-gray-700 p-8 rounded-xl">
             <h3 className="text-xl text-center">Reviews</h3>
+            {reviews.length === 0 && <h2 className="mt-6 text-center text-red-500">No reviews for this trip</h2>}
             {reviews.length > 0 &&
               reviews.map((review) => (
                 <div className="bg-gray-500 flex p-4 rounded-xl mt-6 gap-4 items-center">
@@ -116,8 +127,8 @@ const Reviews = ({ trip }) => {
                       })}
                     </span>
                   </div>
-                  {user.name === review.user.name && (
-                    <button className="bg-red-500 p-2 rounded-full">
+                  {user?.name === review.user.name && (
+                    <button className="bg-red-500 p-2 rounded-full" onClick={()=>removeReview(review._id)}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"

@@ -30,6 +30,7 @@ const getAllReviews = (req, res) => {
   Review.find({})
     .populate("user")
     .populate("trip")
+    .sort({createdAt : -1})
     .then((response) => res.status(StatusCodes.OK).json(response));
 };
 
